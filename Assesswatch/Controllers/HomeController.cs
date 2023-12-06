@@ -28,5 +28,16 @@ namespace Assesswatch.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Update(string id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
     }
 }

@@ -3,6 +3,71 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="card-body">
+        <div class="my-3" style=" margin-top: 40px;">
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Create">Tambah Data</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nama skema</th>
+                    <th scope="col">start date</th>
+                    <th scope="col">end date</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+    loadtable()
+
+    function loadtable() {
+        var hostname + "https://localhost:8080/"
+        var url = hostname + "GetAllSkema"
+        var method = "GET"
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var list = data.data
+                list.forEach(function (item) {
+                    var newRow = '<tr>' +
+                        '<tr>' + item.id + '</td>' +
+                        '<tr>' + item.Nama_skema + '</td>' +
+                        '<tr>' + item.start_date + '</td>' +
+                        '<tr>' + item.end_date + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-secondary" href="/Home/Update?id=' + item.id + '">Update</a>' +
+                        '<button class="btn btn-danger" value="' + item.id + '" onclik="hapus(this.value)">Delete</button>' +
+                        '</td>' +
+                        '</tr>';
+
+                    $('#tbody').append(newRow);
+                });
+            },
+        });
+    }
+
+    function hapus(id) {
+        var hostname + "https://localhost:8080/"
+        var url = hostname + "DeleteSkema?id=" + id
+        var method = "DELETE"
+
+        $.ajax({
+            url: url,
+            method: method,
+            contenType: "application/json",
+            success: function (data) {
+                alert("Data Berhasil Dihapus")
+                location.reload();
+            },
+        });
+
+    }
+</script>
+
